@@ -7,7 +7,7 @@ use App\Http\Controllers\HomeController; // Add this line
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::view('jobs', 'jobs');
+Route::get('jobs', [JobController::class, 'index'])->name('jobs');
 Route::view('companies', 'companies');
 
 Route::view('job-detail', 'job-detail');
