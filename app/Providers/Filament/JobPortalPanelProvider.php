@@ -28,6 +28,9 @@ class JobPortalPanelProvider extends PanelProvider
             ->id('job-portal')
             ->path('job-portal')
             ->login()
+            ->brandLogo(fn () => new \Illuminate\Support\HtmlString('
+                <svg class="h-8 w-auto" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="8" fill="#DC2626"/><text x="8" y="23" font-family="Inter, sans-serif" font-weight="bold" font-size="18" fill="white">B</text></svg>
+            '))
             ->colors([
                 'primary' => Color::Red,
             ])

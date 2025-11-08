@@ -1,0 +1,279 @@
+<?php
+// database/migrations/2025_11_01_000010_create_payments_table.php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::create('payments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('job_id')->nullable()->constrained('jobs')->onDelete('cascade');
+            $table->decimal('amount', 10, 2);
+            $table->string('currency', 3)->default('BDT');
+            $table->enum('type', ['job_post', 'subscription', 'premium'])->default('job_post');
+            $table->enum('status', ['pending', 'paid', 'failed'])->default('pending');
+            $table->string('transaction_id', 255)->nullable();
+            $table->timestamp('paid_at')->nullable();
+            $table->timestamps();
+            $table->index(['status', 'paid_at', 'type']);
+        });
+    }
+
+    public function down(): void {
+        Schema::dropIfExists('payments');
+    }
+};<?php
+// database/migrations/2025_11_01_000009_create_applications_table.php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::create('applications', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('job_id')->constrained('jobs')->onDelete('cascade');
+            $table->foreignId('seeker_id')->constrained('users')->onDelete('cascade');
+            $table->text('cover_letter')->nullable();
+            $table->string('resume_path')->nullable();
+            $table->enum('status', ['pending', 'reviewed', 'rejected', 'hired'])->default('pending');
+            $table->timestamps();
+            $table->unique(['job_id', 'seeker_id']);
+            $table->index(['status']);
+        });
+    }
+
+    public function down(): void {
+        Schema::dropIfExists('applications');
+    }
+};<?php
+// database/migrations/2025_11_01_000008_create_job_education_levels_table.php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::create('job_education_levels', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('job_id')->constrained('jobs')->onDelete('cascade');
+            $table->foreignId('education_level_id')->constrained('education_levels')->onDelete('cascade');
+            $table->timestamps();
+            $table->unique(['job_id', 'education_level_id']);
+            $table->index(['job_id', 'education_level_id']);
+        });
+    }
+
+    public function down(): void {
+        Schema::dropIfExists('job_education_levels');
+    }
+};<?php
+// database/migrations/2025_11_01_000007_create_job_categories_table.php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::create('job_categories', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('job_id')->constrained('jobs')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->timestamps();
+            $table->unique(['job_id', 'category_id']);
+            $table->index(['job_id', 'category_id']);
+        });
+    }
+
+    public function down(): void {
+        Schema::dropIfExists('job_categories');
+    }
+};<?php
+// database/migrations/2025_11_01_000006_create_jobs_table.php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::create('jobs', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
+            $table->string('title', 255);
+            $table->string('slug', 255)->unique();
+            $table->string('ref_no', 50)->unique()->nullable();
+            $table->longText('description');
+            $table->text('requirements')->nullable();
+            $table->text('responsibilities')->nullable();
+            $table->text('benefits')->nullable();
+            $table->decimal('salary_min', 10, 2)->nullable();
+            $table->decimal('salary_max', 10, 2)->nullable();
+            $table->string('location', 100);
+            $table->enum('job_type', ['full-time', 'part-time', 'remote', 'contract'])->default('full-time');
+            $table->enum('employment_status', ['permanent', 'temporary', 'contractual'])->default('permanent');
+            $table->enum('status', ['active', 'inactive', 'expired'])->default('active');
+            $table->date('deadline')->nullable();
+            $table->boolean('is_hot')->default(false);
+            $table->json('keywords')->nullable();
+            $table->integer('views_count')->default(0);
+            $table->decimal('experience_min', 5, 2)->nullable()->default(0);
+            $table->decimal('experience_max', 5, 2)->nullable()->default(5);
+            $table->integer('age_min')->nullable()->default(18);
+            $table->integer('age_max')->nullable()->default(35);
+            $table->enum('gender_preference', ['male', 'female', 'both', 'prefer_not_to_say'])->nullable()->default('both');
+            $table->enum('job_nature', ['office', 'field', 'remote', 'hybrid'])->nullable();
+            $table->decimal('avg_match_score', 3, 2)->default(0);
+            $table->timestamps();
+            $table->softDeletes();
+            $table->index(['title', 'location', 'status', 'slug', 'salary_min', 'salary_max', 'experience_min', 'experience_max', 'age_min', 'age_max', 'gender_preference']);
+            $table->fullText(['title', 'description', 'keywords']);
+        });
+    }
+
+    public function down(): void {
+        Schema::dropIfExists('jobs');
+    }
+};<?php
+// database/migrations/2025_11_01_000005_create_education_levels_table.php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::create('education_levels', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 100)->unique();
+            $table->text('description')->nullable();
+            $table->timestamps();
+            $table->index('name');
+        });
+    }
+
+    public function down(): void {
+        Schema::dropIfExists('education_levels');
+    }
+};[3:43 am, 1/11/2025] prantho kumar: <?php
+// database/migrations/2025_11_01_000001_create_users_table.php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->enum('role', ['super_admin', 'admin', 'company_admin', 'employer', 'seeker'])->default('seeker');
+            $table->string('phone', 20)->nullable();
+            $table->enum('status', ['active', 'inactive', 'banned'])->default('active');
+            $table->rememberToken();
+            $table->timestamps();
+            $table->softDeletes();
+            $table->index(['email', 'role', 'status']);
+        });
+    }
+
+    public function down(): void {
+        Schema::dropIfExists('users');
+    }
+};
+[3:44 am, 1/11/2025] prantho kumar: <?php
+// database/migrations/2025_11_01_000002_create_profiles_table.php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::create('profiles', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->text('bio')->nullable();
+            $table->string('resume_path')->nullable();
+            $table->string('video_resume_path')->nullable();
+            $table->json('skills')->nullable();
+            $table->decimal('experience_years', 5, 2)->default(0);
+            $table->json('education')->nullable();
+            $table->string('location', 100)->nullable();
+            $table->json('keywords')->nullable();
+            $table->string('department')->nullable(); // Employer/company_admin specific
+            $table->json('linked_companies')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+            $table->index(['location']);
+            $table->fullText(['skills', 'keywords']);
+        });
+    }
+
+    public function down(): void {
+        Schema::dropIfExists('profiles');
+    }
+};
+[3:44 am, 1/11/2025] prantho kumar: <?php
+// database/migrations/2025_11_01_000003_create_companies_table.php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::create('companies', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('employer_id')->constrained('users')->onDelete('cascade'); // Owner
+            $table->foreignId('admin_id')->nullable()->constrained('users')->onDelete('set null'); // Mandatory company admin
+            $table->string('name', 255);
+            $table->text('description')->nullable();
+            $table->string('logo_path', 255)->nullable();
+            $table->string('website', 255)->nullable();
+            $table->string('location', 100);
+            $table->string('industry', 100)->nullable();
+            $table->decimal('average_rating', 3, 2)->default(0);
+            $table->integer('reviews_count')->default(0);
+            $table->timestamps();
+            $table->softDeletes();
+            $table->index(['name', 'location']);
+        });
+    }
+
+    public function down(): void {
+        Schema::dropIfExists('companies');
+    }
+};<?php
+// database/migrations/2025_11_01_000004_create_categories_table.php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 100)->unique();
+            $table->string('slug', 100)->unique();
+            $table->text('description')->nullable();
+            $table->foreignId('parent_id')->nullable()->constrained('categories')->onDelete('cascade');
+            $table->timestamps();
+            $table->index(['name', 'slug']);
+        });
+    }
+
+    public function down(): void {
+        Schema::dropIfExists('categories');
+    }
+};
