@@ -17,7 +17,7 @@
 <body class="bg-gray-50 font-sans antialiased">
 
     {{-- Header/Navigation --}}
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
+    <nav id="main-header" class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <a href="{{ url('/') }}" class="flex items-center space-x-3">
@@ -45,7 +45,7 @@
     </main>
 
     {{-- Footer --}}
-    <footer class="bg-[#002D3A]" aria-labelledby="footer-heading">
+    <footer id="main-footer" class="bg-[#002D3A]" aria-labelledby="footer-heading">
         <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
             <div class="pb-8 xl:grid xl:grid-cols-5 xl:gap-8">
                 <div class="space-y-8 xl:col-span-2">

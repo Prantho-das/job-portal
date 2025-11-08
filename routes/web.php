@@ -1,16 +1,17 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController; // Add this line
-
 use App\Http\Controllers\HomeController; // Add this line
 
 Route::get('/', [HomeController::class, 'index']);
 
 Route::get('jobs', [JobController::class, 'index'])->name('jobs');
-Route::view('companies', 'companies');
+Route::get('companies', [CompanyController::class, 'index'])->name('companies');
 
-Route::view('job-detail', 'job-detail');
+Route::get('job-detail/{job:slug}', [JobController::class, 'show'])->name('job-detail');
 
 Route::view('build-cv', 'build-cv');
 
@@ -24,5 +25,7 @@ Route::view('profile', 'profile')
 
 require __DIR__.'/auth.php';
 
-// Route for custom pages
+use App\Http\Controllers\ApplicationController; // Add this line
+
+Route::post('jobs/{job:slug}/apply', [ApplicationController::class, 'store'])->name('applications.store');
 Route::get('/{slug}', [PageController::class, 'show'])->where('slug', '.*')->name('page.show');

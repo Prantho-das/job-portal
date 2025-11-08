@@ -61,4 +61,11 @@ class JobController extends Controller
 
         return view('jobs', compact('jobs', 'categories', 'educationLevels', 'jobTypes'));
     }
+
+    public function show(Job $job)
+    {
+        $job->load(['company', 'categories', 'educationLevels']); // Eager load relationships
+
+        return view('job-detail', compact('job'));
+    }
 }

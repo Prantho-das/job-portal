@@ -32,7 +32,7 @@
                             <img class="h-10 w-20 object-contain" src="{{ $job->company->logo ?? 'https://placehold.co/100x40/e2e8f0/334155?text=Logo' }}" alt="{{ $job->company->name ?? 'Company' }} logo">
                         </div>
                         <div class="flex-grow">
-                            <h3 class="text-lg font-semibold text-gray-900 hover:text-red-600 cursor-pointer">{{ $job->title }}</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 hover:text-red-600 cursor-pointer"><a href="{{ route('job-detail', $job->slug) }}">{{ $job->title }}</a></h3>
                             <p class="text-sm text-gray-600">{{ $job->company->name ?? 'N/A' }}</p>
                             <div class="mt-2 flex flex-wrap items-center text-sm text-gray-500">
                                 <div class="flex items-center mr-4 my-1">
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="ml-6 flex-shrink-0">
-                        <a href="{{ url('/job-detail') }}" class="px-5 py-2.5 rounded-md text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
+                        <a href="{{ route('job-detail', $job->slug) }}" class="px-5 py-2.5 rounded-md text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
                             View Job
                         </a>
                     </div>
