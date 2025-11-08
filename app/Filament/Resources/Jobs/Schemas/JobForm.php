@@ -12,6 +12,8 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TagsInput;
 use Illuminate\Support\Str;
 use App\Models\Job;
+use Illuminate\Support\Facades\Auth;
+
 class JobForm
 {
     public static function configure(Schema $schema): Schema
@@ -19,6 +21,10 @@ class JobForm
         return $schema
             ->components([
             Section::make('Basic Info')->schema([
+                TextInput::make('user_id')
+                    ->hidden()
+                    ->default(Auth::id())
+                    ->required(),
                 Select::make('company_id')
                     ->label('Company')
                     ->relationship('company', 'name')

@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'BGEA Jobs - Find Your Dream Job Today')
+@section('title', $heroTitle)
 
 @section('content')
 
@@ -8,15 +8,15 @@
     <header class="bg-[#002D3A]">
         <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:flex items-center justify-between">
             <div class="text-white max-w-lg">
-                <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight">Find Your Dream Job Today</h1>
-                <p class="mt-4 text-lg text-gray-300">The largest job portal for garments & textiles sector in Bangladesh.</p>
-                <a href="{{ url('/jobs') }}" class="mt-8 inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700">
-                    Browse Jobs
+                <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight">{{ $heroTitle }}</h1>
+                <p class="mt-4 text-lg text-gray-300">{{ $heroDescription }}</p>
+                <a href="{{ $heroButtonUrl }}" class="mt-8 inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700">
+                    {{ $heroButtonText }}
                     <svg class="ml-2 -mr-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                 </a>
             </div>
             <div class="mt-10 lg:mt-0 flex-shrink-0">
-                <img class="h-80 w-full object-cover rounded-lg shadow-xl lg:h-96 lg:w-[450px]" src="https://images.unsplash.com/photo-1554774853-719586f82d77?q=80&w=2070&auto=format&fit=crop" alt="Professional in a modern textile factory">
+                <img class="h-80 w-full object-cover rounded-lg shadow-xl lg:h-96 lg:w-[450px]" src="{{ Storage::url($heroImage) }}" alt="{{ $heroTitle }}">
             </div>
         </div>
     </header>
@@ -65,21 +65,7 @@
 
             {{-- Pagination --}}
             <div class="mt-10 flex justify-center">
-                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                        <span class="sr-only">Previous</span>
-                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                    </a>
-                    <a href="#" aria-current="page" class="z-10 bg-red-50 border-red-500 text-red-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">1</a>
-                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">2</a>
-                    <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>
-                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">9</a>
-                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">10</a>
-                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                        <span class="sr-only">Next</span>
-                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                    </a>
-                </nav>
+                {{ $latestJobs->links('pagination::tailwind') }}
             </div>
         </div>
     </div>

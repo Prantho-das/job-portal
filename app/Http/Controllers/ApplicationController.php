@@ -11,6 +11,16 @@ use Illuminate\Validation\Rule;
 
 class ApplicationController extends Controller
 {
+    public function index()
+    {
+        $appliedJobs = Application::where('user_id', Auth::id())
+                                ->with('job.company')
+                                ->latest()
+                                ->paginate(10); // Or any desired pagination limit
+
+        return view('applied-jobs', compact('appliedJobs'));
+    }
+
     public function store(Request $request, Job $job)
     {
         $rules = [

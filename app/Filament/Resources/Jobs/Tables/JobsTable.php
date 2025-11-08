@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources\Jobs\Tables;
 
+
+use App\Filament\Resources\Applications\ApplicationResource;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -30,6 +33,7 @@ class JobsTable
             ]),
             IconColumn::make('is_hot')->boolean()->label('Hot'),
             TextColumn::make('deadline')->date()->sortable(),
+            TextColumn::make('applications_count')->counts('applications')->label('Applications'),
             TextColumn::make('created_at')->dateTime()->sortable(),
             ])
             ->filters([
@@ -37,6 +41,11 @@ class JobsTable
             ])
             ->recordActions([
                 EditAction::make(),
+                Action::make('viewApplications')
+                    ->label('View Applications')
+                    ->url(fn ($record) => ApplicationResource::getUrl('index', ['tableFilters' => ['job_id' => $record->id]]))
+                    ->icon('heroicon-o-document-text')
+                    ->color('info'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

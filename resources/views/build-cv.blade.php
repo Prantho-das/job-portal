@@ -1,17 +1,19 @@
 @extends('layouts.frontend')
 
-@section('title', 'Build Your CV - BGEA Jobs')
+@section('title', $buildCvTitle)
 
 @section('content')
 
 <div class="bg-white py-12">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
         <div class="text-center">
-            <h1 class="text-3xl font-bold text-gray-900">Build Your Professional CV</h1>
-            <p class="mt-2 text-sm text-gray-600">Fill out the sections below to create a comprehensive CV that you can use to apply for jobs.</p>
+            <h1 class="text-3xl font-bold text-gray-900">{{ $buildCvTitle }}</h1>
+            <p class="mt-2 text-sm text-gray-600">{{ $buildCvDescription }}</p>
         </div>
 
-        <form action="#" method="POST" class="mt-10 space-y-10">
+        <form action="{{ route('cv.store') }}" method="POST" class="mt-10 space-y-10">
+            @csrf
+
             {{-- Personal Information --}}
             <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
                 <h2 class="text-xl font-semibold text-gray-800">Personal Information</h2>
@@ -40,62 +42,72 @@
             </div>
 
             {{-- Work Experience --}}
-            <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-6" x-data="{ experiences: [{ job_title: '', company: '', start_date: '', end_date: '', responsibilities: '' }] }">
                 <h2 class="text-xl font-semibold text-gray-800">Work Experience</h2>
                 <div class="mt-6 space-y-6">
-                    <div class="border border-gray-300 rounded-md p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <label for="job_title" class="block text-sm font-medium text-gray-700">Job Title</label>
-                                <input type="text" name="job_title" id="job_title" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
-                            </div>
-                            <div>
-                                <label for="company" class="block text-sm font-medium text-gray-700">Company</label>
-                                <input type="text" name="company" id="company" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
-                            </div>
-                            <div>
-                                <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
-                                <input type="month" name="start_date" id="start_date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
-                            </div>
-                            <div>
-                                <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
-                                <input type="month" name="end_date" id="end_date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label for="responsibilities" class="block text-sm font-medium text-gray-700">Responsibilities</label>
-                                <textarea name="responsibilities" id="responsibilities" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm"></textarea>
+                    <template x-for="(experience, index) in experiences" :key="index">
+                        <div class="border border-gray-300 rounded-md p-4 relative">
+                            <button type="button" x-show="experiences.length > 1" @click="experiences.splice(index, 1)" class="absolute top-2 right-2 text-red-600 hover:text-red-800">
+                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label :for="'experience_' + index + '_job_title'" class="block text-sm font-medium text-gray-700">Job Title</label>
+                                    <input type="text" :name="'experiences[' + index + '][job_title]'" :id="'experience_' + index + '_job_title'" x-model="experience.job_title" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
+                                </div>
+                                <div>
+                                    <label :for="'experience_' + index + '_company'" class="block text-sm font-medium text-gray-700">Company</label>
+                                    <input type="text" :name="'experiences[' + index + '][company]'" :id="'experience_' + index + '_company'" x-model="experience.company" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
+                                </div>
+                                <div>
+                                    <label :for="'experience_' + index + '_start_date'" class="block text-sm font-medium text-gray-700">Start Date</label>
+                                    <input type="month" :name="'experiences[' + index + '][start_date]'" :id="'experience_' + index + '_start_date'" x-model="experience.start_date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
+                                </div>
+                                <div>
+                                    <label :for="'experience_' + index + '_end_date'" class="block text-sm font-medium text-gray-700">End Date</label>
+                                    <input type="month" :name="'experiences[' + index + '][end_date]'" :id="'experience_' + index + '_end_date'" x-model="experience.end_date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <label :for="'experience_' + index + '_responsibilities'" class="block text-sm font-medium text-gray-700">Responsibilities</label>
+                                    <textarea :name="'experiences[' + index + '][responsibilities]'" :id="'experience_' + index + '_responsibilities'" x-model="experience.responsibilities" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm"></textarea>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </template>
                 </div>
                 <div class="mt-4 text-right">
-                    <button type="button" class="text-sm font-medium text-red-600 hover:text-red-800">+ Add Another Experience</button>
+                    <button type="button" @click="experiences.push({ job_title: '', company: '', start_date: '', end_date: '', responsibilities: '' })" class="text-sm font-medium text-red-600 hover:text-red-800">+ Add Another Experience</button>
                 </div>
             </div>
 
             {{-- Education --}}
-            <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-6" x-data="{ educations: [{ degree: '', institution: '', graduation_date: '' }] }">
                 <h2 class="text-xl font-semibold text-gray-800">Education</h2>
                 <div class="mt-6 space-y-6">
-                    <div class="border border-gray-300 rounded-md p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <label for="degree" class="block text-sm font-medium text-gray-700">Degree or Certificate</label>
-                                <input type="text" name="degree" id="degree" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
-                            </div>
-                            <div>
-                                <label for="institution" class="block text-sm font-medium text-gray-700">Institution</label>
-                                <input type="text" name="institution" id="institution" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label for="graduation_date" class="block text-sm font-medium text-gray-700">Graduation Date</label>
-                                <input type="month" name="graduation_date" id="graduation_date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
+                    <template x-for="(education, index) in educations" :key="index">
+                        <div class="border border-gray-300 rounded-md p-4 relative">
+                            <button type="button" x-show="educations.length > 1" @click="educations.splice(index, 1)" class="absolute top-2 right-2 text-red-600 hover:text-red-800">
+                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label :for="'education_' + index + '_degree'" class="block text-sm font-medium text-gray-700">Degree or Certificate</label>
+                                    <input type="text" :name="'educations[' + index + '][degree]'" :id="'education_' + index + '_degree'" x-model="education.degree" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
+                                </div>
+                                <div>
+                                    <label :for="'education_' + index + '_institution'" class="block text-sm font-medium text-gray-700">Institution</label>
+                                    <input type="text" :name="'educations[' + index + '][institution]'" :id="'education_' + index + '_institution'" x-model="education.institution" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <label :for="'education_' + index + '_graduation_date'" class="block text-sm font-medium text-gray-700">Graduation Date</label>
+                                    <input type="month" :name="'educations[' + index + '][graduation_date]'" :id="'education_' + index + '_graduation_date'" x-model="education.graduation_date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm">
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </template>
                 </div>
                 <div class="mt-4 text-right">
-                    <button type="button" class="text-sm font-medium text-red-600 hover:text-red-800">+ Add Another Education</button>
+                    <button type="button" @click="educations.push({ degree: '', institution: '', graduation_date: '' })" class="text-sm font-medium text-red-600 hover:text-red-800">+ Add Another Education</button>
                 </div>
             </div>
 
@@ -107,6 +119,15 @@
                     <textarea name="skills" id="skills" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm sm:text-sm"></textarea>
                 </div>
             </div>
+            
+            @if ($buildCvContent)
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                <h2 class="text-xl font-semibold text-gray-800">Additional Information</h2>
+                <div class="mt-6 prose max-w-none">
+                    {!! $buildCvContent !!}
+                </div>
+            </div>
+            @endif
 
             {{-- Action Button --}}
             <div class="text-right">

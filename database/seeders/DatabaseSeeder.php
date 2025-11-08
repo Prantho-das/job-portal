@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             EducationLevelSeeder::class,
             SettingSeeder::class,
             JobSeeder::class,
+            PageSeeder::class,
         ]);
     }
 }
