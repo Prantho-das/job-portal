@@ -13,6 +13,7 @@ class Page extends Model
     protected $fillable = [
         'title',
         'slug',
+        'featured_image', // Added featured_image to fillable
         'content',
         'status',
         'seo_title',

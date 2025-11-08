@@ -46,11 +46,11 @@ class PagesTable
                 //
             ])
             ->actions([
-                EditAction::make(),
+                \Filament\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                \Filament\Actions\BulkActionGroup::make([
+                \Filament\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

@@ -6,6 +6,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\FileUpload; // Import FileUpload
 use Filament\Forms\Set;
 use Filament\Forms\Get;
 use Filament\Schemas\Schema;
@@ -26,6 +27,11 @@ class PageForm
                     ->required()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true),
+                FileUpload::make('featured_image') // Added FileUpload for featured_image
+                    ->image()
+                    ->directory('page_featured_images') // Store featured images in 'public/page_featured_images'
+                    ->visibility('public')
+                    ->nullable(),
                 RichEditor::make('content')
                     ->columnSpanFull()
                     ->fileAttachmentsDisk('public') // Use the 'public' disk for file attachments
