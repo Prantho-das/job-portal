@@ -20,7 +20,7 @@ class EducationLevelResource extends Resource
 {
     protected static ?string $model = EducationLevel::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-academic-cap';
 
     public static function form(Schema $schema): Schema
     {
