@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('job_education_levels', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('job_id')->constrained()->onDelete('cascade');
+            $table->foreignId('job_id')->constrained('c_jobs')->onDelete('cascade');
             $table->foreignId('education_level_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->index(['job_id', 'education_level_id']);

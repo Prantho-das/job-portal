@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('job_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('job_id')->constrained()->onDelete('cascade');
+            $table->foreignId('job_id')->constrained('c_jobs')->onDelete('cascade');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->index(['job_id', 'category_id']);

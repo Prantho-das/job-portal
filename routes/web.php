@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController; // Add this line
 
-Route::view('/', 'welcome');
+use App\Http\Controllers\HomeController; // Add this line
+
+Route::get('/', [HomeController::class, 'index']);
 
 Route::view('jobs', 'jobs');
 Route::view('companies', 'companies');
