@@ -15,6 +15,12 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\IconColumn;
+
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\TextInput;
+use Illuminate\Database\Eloquent\Builder;
 class JobsTable
 {
     public static function configure(Table $table): Table
@@ -37,7 +43,44 @@ class JobsTable
             TextColumn::make('created_at')->dateTime()->sortable(),
             ])
             ->filters([
-                TrashedFilter::make(),
+            SelectFilter::make('company_id')
+                ->label('Company')
+                ->relationship('company', 'name')
+                ->searchable(),
+
+            // ✅ Filter by Location
+            SelectFilter::make('location')
+                ->label('Location')
+                ->options(
+                    \App\Models\Job::query()
+                        ->select('location')
+                        ->distinct()
+                        ->pluck('location', 'location')
+                ),
+
+            // ✅ Filter by Deadline (Date Range)
+            Filter::make('deadline')
+                ->form([
+                    DatePicker::make('from')->label('From'),
+                    DatePicker::make('until')->label('Until'),
+                ])
+                ->query(function (Builder $query, array $data): Builder {
+                    return $query
+                        ->when($data['from'], fn($q, $date) => $q->whereDate('deadline', '>=', $date))
+                        ->when($data['until'], fn($q, $date) => $q->whereDate('deadline', '<=', $date));
+                }),
+
+            // ✅ Filter by Salary Range
+            Filter::make('salary')
+                ->form([
+                    TextInput::make('min')->label('Min Salary')->numeric(),
+                    TextInput::make('max')->label('Max Salary')->numeric(),
+                ])
+                ->query(function (Builder $query, array $data): Builder {
+                    return $query
+                        ->when($data['min'], fn($q, $min) => $q->where('salary_min', '>=', $min))
+                        ->when($data['max'], fn($q, $max) => $q->where('salary_max', '<=', $max));
+                }),
             ])
             ->recordActions([
                 EditAction::make(),
