@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="py-12 bg-white">
+    <div class="py-12 bg-[#f0eff5]">
         <div class="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
             <h1 class="mb-10 text-3xl font-bold text-center text-gray-800">Featured Companies</h1>
 
