@@ -60,8 +60,14 @@
             <div class="pb-8 xl:grid xl:grid-cols-5 xl:gap-8">
                 <div class="space-y-8 xl:col-span-2">
                     <div class="flex items-center space-x-3">
-                       <svg class="w-auto h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="8" fill="#DC2626"/><text x="8" y="23" font-family="Inter, sans-serif" font-weight="bold" font-size="18" fill="white">B</text></svg>
-                       <span class="text-xl font-bold text-white">BGEA Jobs</span>
+                       @if (!empty($site_logo))
+                        <img src="{{ asset('storage/' . $site_logo) }}" alt="Site Logo"
+                            class="w-auto h-10 transition-transform duration-200 rounded-lg shadow-sm hover:scale-105">
+                        @else
+                        <div class="flex items-center justify-center w-10 h-10 text-lg font-bold text-white bg-red-600 rounded-lg">
+                            B
+                        </div>
+                        @endif
                     </div>
                     <p class="max-w-xs text-base text-gray-300">
                         {{ $footerDescription }}

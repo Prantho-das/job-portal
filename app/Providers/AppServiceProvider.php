@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::policy(Job::class, JobPolicy::class);
 
-        View::composer('layouts.frontend', function ($view) {
+        View::composer(['layouts.frontend', 'layouts.app','livewire.layout.navigation'], function ($view) {
             $settingsService = app(SettingsService::class);
 
             $footerDescription = $settingsService->get('footer_description', 'The largest job portal for garments & textiles sector in Bangladesh.');
