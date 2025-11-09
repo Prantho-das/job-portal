@@ -26,7 +26,7 @@
         <div class="max-w-screen-xl mx-auto sm:px-6 lg:px-8">
             <div class="space-y-4">
                 @foreach($latestJobs as $job)
-                <div class="flex items-center justify-between px-4 py-3 transition-shadow duration-200 bg-white border border-gray-200 rounded-xl sm:p-6 hover:shadow-md">
+                <div class="flex items-center justify-between p-4 transition-shadow duration-200 bg-white border border-gray-200 rounded-xl sm:p-6 hover:shadow-md">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 mr-5">
                             <img class="object-contain w-20 h-10" src="{{ $job->company->logo ?? 'https://placehold.co/100x40/e2e8f0/334155?text=Logo' }}" alt="{{ $job->company->name ?? 'Company' }} logo">
