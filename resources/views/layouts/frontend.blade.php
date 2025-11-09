@@ -40,12 +40,12 @@
         </div>
     </nav>
 
-    <main>
+    <main class="bg-[#f0eff5]">
         @yield('content')
     </main>
 
     {{-- Footer --}}
-    <footer id="main-footer" class="bg-[#002D3A]" aria-labelledby="footer-heading">
+    <footer id="main-footer" class="bg-[#0b3c38]" aria-labelledby="footer-heading">
         <div class="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:py-16 lg:px-8">
             <div class="pb-8 xl:grid xl:grid-cols-5 xl:gap-8">
                 <div class="space-y-8 xl:col-span-2">

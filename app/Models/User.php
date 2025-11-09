@@ -22,6 +22,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'phone',
+        'status',
     ];
 
     /**
@@ -56,4 +59,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
+    public function company(): HasOne
+    {
+        return $this->hasOne(Company::class);
+    }
+
+    
 }

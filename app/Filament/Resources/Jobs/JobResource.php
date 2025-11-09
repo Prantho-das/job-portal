@@ -56,9 +56,9 @@ class JobResource extends Resource
                 SoftDeletingScope::class,
             ]);
 
-        if (Auth::user()->role === 'employee') {
-            $query->where('user_id', Auth::id());
-        }
+        // if (Auth::user()->role === 'employee') {
+        //     $query->where('user_id', Auth::id());
+        // }
 
         return $query;
     }

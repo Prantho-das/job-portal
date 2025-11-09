@@ -13,7 +13,7 @@ class JobPolicy
      */
     public function before(User $user, string $ability): ?bool
     {
-        if ($user->role === 'admin') {
+        if ($user->role === 'employee' || $user->role=='admin') {
             return true;
         }
 
@@ -25,7 +25,7 @@ class JobPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'employee';
+        return $user->role === 'employee' || $user->role=='admin';
     }
 
     /**
@@ -41,7 +41,7 @@ class JobPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'employee';
+        return $user->role === 'employee' || $user->role=='admin';
     }
 
     /**
@@ -49,7 +49,7 @@ class JobPolicy
      */
     public function update(User $user, Job $job): bool
     {
-        return $user->role === 'employee' && $user->id === $job->user_id;
+        return ($user->role === 'employee' || $user->role=='admin')&& $user->id === $job->user_id;
     }
 
     /**
@@ -57,7 +57,8 @@ class JobPolicy
      */
     public function delete(User $user, Job $job): bool
     {
-        return $user->role === 'employee' && $user->id === $job->user_id;
+        return ($user->role === 'employee' || $user->role=='admin')&& $user->id === $job->user_id;
+
     }
 
     /**
@@ -65,7 +66,7 @@ class JobPolicy
      */
     public function restore(User $user, Job $job): bool
     {
-        return $user->role === 'employee' && $user->id === $job->user_id;
+        return ($user->role === 'employee' || $user->role=='admin')&& $user->id === $job->user_id;
     }
 
     /**
@@ -73,6 +74,7 @@ class JobPolicy
      */
     public function forceDelete(User $user, Job $job): bool
     {
-        return $user->role === 'employee' && $user->id === $job->user_id;
+        return ($user->role === 'employee' || $user->role=='admin')&& $user->id === $job->user_id;
+
     }
 }

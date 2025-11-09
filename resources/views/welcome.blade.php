@@ -5,7 +5,7 @@
 @section('content')
 
     {{-- Hero Section --}}
-    <header class="bg-[#002D3A]">
+    <header class="bg-[#0b3c38]">
         <div class="items-center justify-between max-w-screen-xl px-4 py-20 mx-auto sm:px-6 lg:px-8 lg:flex">
             <div class="max-w-lg text-white">
                 <h1 class="text-4xl font-extrabold leading-tight lg:text-5xl">{{ $heroTitle }}</h1>
@@ -22,11 +22,11 @@
     </header>
 
     {{-- Job Listings --}}
-    <div class="py-12 bg-white">
+    <div class="py-12">
         <div class="max-w-screen-xl mx-auto sm:px-6 lg:px-8">
-            <div class="space-y-px">
+            <div class="space-y-4">
                 @foreach($latestJobs as $job)
-                <div class="flex items-center justify-between p-4 transition-shadow duration-200 bg-white border border-gray-200 rounded-lg sm:p-6 hover:shadow-md">
+                <div class="flex items-center justify-between px-4 py-3 transition-shadow duration-200 bg-white border border-gray-200 rounded-xl sm:p-6 hover:shadow-md">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 mr-5">
                             <img class="object-contain w-20 h-10" src="{{ $job->company->logo ?? 'https://placehold.co/100x40/e2e8f0/334155?text=Logo' }}" alt="{{ $job->company->name ?? 'Company' }} logo">
@@ -47,7 +47,7 @@
                                     <svg class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                                     <span>Deadline: {{ $job->deadline->format('d M Y') }}</span>
                                 </div>
-                                <div class="flex items-center my-1">
+                                <div class="flex items-center w-full my-1">
                                     <svg class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                                     <span>{{ $job->location }}</span>
                                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Company;
 use App\Models\EducationLevel;
 use App\Models\Job;
 use Illuminate\Http\Request;
@@ -51,6 +52,13 @@ class JobController extends Controller
             $query->whereHas('educationLevels', function ($q) use ($request) {
                 $q->where('education_levels.id', $request->input('education_level'));
             });
+        }
+        if ($request->filled('company_slug')) {
+            
+                $company= Company::where('slug', $request->input('company_slug'))->first('id');
+            
+                $query->where('company_id',$company->id);
+            
         }
 
         $jobs = $query->latest()->paginate(10);

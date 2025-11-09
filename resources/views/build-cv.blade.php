@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="py-12 bg-white">
+<div class="py-12">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
         <div class="text-center">
             <h1 class="text-3xl font-bold text-gray-900">{{ $buildCvTitle }}</h1>

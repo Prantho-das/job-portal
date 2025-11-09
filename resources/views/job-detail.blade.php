@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="py-12 bg-white">
+<div class="py-12">
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="p-6 bg-white border border-gray-200 rounded-lg md:p-8">
 
