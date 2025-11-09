@@ -31,9 +31,10 @@ class ApplicationForm
                 Select::make('status')
                     ->options([
                         'pending' => 'Pending',
-                        'reviewed' => 'Reviewed',
-                        'accepted' => 'Accepted',
-                        'rejected' => 'Rejected',
+                'approved' => 'Accepted',
+                'rejected' => 'Rejected',
+
+
                     ])
                     ->required()
                     ->default('pending'),

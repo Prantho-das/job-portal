@@ -87,6 +87,8 @@ class ApplicationsTable
             ->columns([
                 TextColumn::make('job.title')
                     ->searchable(),
+                TextColumn::make('job.company.name')
+                    ->searchable(),
                 TextColumn::make('user.name')
                     ->searchable(),
                 TextColumn::make('email')
