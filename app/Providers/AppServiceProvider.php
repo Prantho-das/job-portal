@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
             $footerDescription = $settingsService->get('footer_description', 'The largest job portal for garments & textiles sector in Bangladesh.');
             $footerPhone = $settingsService->get('footer_phone', '+123 456 7890');
             $footerEmail = $settingsService->get('footer_email', 'support@mm.com');
+            $site_logo = $settingsService->get('site_logo');
 
             $footerCompanyLinks = $this->generateFooterLinks($settingsService->get('footer_company_links', ''));
             $footerDevelopersLinks = $this->generateFooterLinks($settingsService->get('footer_developers_links', ''));

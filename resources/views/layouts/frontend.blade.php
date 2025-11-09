@@ -21,8 +21,7 @@
         <div class="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <a href="{{ url('/') }}" class="flex items-center space-x-3">
-                    <svg class="w-auto h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="8" fill="#DC2626"/><text x="8" y="23" font-family="Inter, sans-serif" font-weight="bold" font-size="18" fill="white">B</text></svg>
-                    <span class="text-xl font-bold text-gray-800">BGEA Jobs</span>
+                    <image src={{url("$site_logo")}} />
                 </a>
                 <div class="items-center hidden space-x-8 md:flex">
                     <a href="{{ url('/') }}" class="text-sm font-medium {{ request()->is('/') ? 'text-red-600' : 'text-gray-700' }} hover:text-red-600">Home</a>
