@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use PDF; // Import the PDF facade from barryvdh/laravel-dompdf
 use Illuminate\Support\Facades\Storage; // Import Storage facade
@@ -45,7 +46,10 @@ class CvBuilderController extends Controller
 
         // 2. Pass the validated data to the CV Blade template
         $pdf = PDF::loadView('cv.template', compact('data'));
-
+        Notification::make()
+            ->title('Cache cleared successfully!')
+            ->success()
+            ->send();
         // 3. Return the generated PDF as a download
         return $pdf->download($data['full_name'] . '_CV.pdf');
     }
