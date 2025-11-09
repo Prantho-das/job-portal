@@ -42,9 +42,9 @@ class AppServiceProvider extends ServiceProvider
             $footerCommunitiesLinks = $this->generateFooterLinks($settingsService->get('footer_communities_links', ''));
 
             $footerCopyrightText = $settingsService->get('footer_copyright_text', '&copy; ' . date('Y') . ' BGEA Jobs. Develop by POPCORN IT.');
-            $footerInstagramUrl = $settingsService->get('footer_instagram_url', '#');
-            $footerTwitterUrl = $settingsService->get('footer_twitter_url', '#');
-            $footerLinkedinUrl = $settingsService->get('footer_linkedin_url', '#');
+            $footerInstagramUrl = $settingsService->get('instagram_url', '#');
+            $footerTwitterUrl = $settingsService->get('twitter_url', '#');
+            $footerLinkedinUrl = $settingsService->get('linkedin_url', '#');
 
             $view->with(compact(
                 'footerDescription',

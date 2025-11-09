@@ -9,8 +9,22 @@ use App\Http\Controllers\CvBuilderController; // Import CvBuilderController
 use App\Http\Controllers\DashboardController; // Import DashboardController
 use App\Http\Controllers\ProfileController; // Import ProfileController
 use App\Http\Controllers\ApplicationController; // Import ProfileController
-
+use Illuminate\Support\Facades\Artisan;
+use Filament\Notifications\Notification;
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+
+    Notification::make()
+        ->title('Cache cleared successfully!')
+        ->success()
+        ->send();
+
+    return redirect()->back();
+})->name('clear-cache');
 
 Route::get('jobs', [JobController::class, 'index'])->name('jobs');
 Route::get('companies', [CompanyController::class, 'index'])->name('companies');

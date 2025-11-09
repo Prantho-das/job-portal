@@ -16,7 +16,7 @@
                 </a>
             </div>
             <div class="flex-shrink-0 mt-10 lg:mt-0">
-                <img class="h-80 w-full object-cover rounded-lg shadow-xl lg:h-96 lg:w-[450px]" src="{{ asset($heroImage) }}" alt="{{ $heroTitle }}">
+                <img class="h-80 w-full object-cover rounded-lg shadow-xl lg:h-96 lg:w-[450px]" src="{{ asset('storage/' .$heroImage) }}" alt="{{ $heroTitle }}">
             </div>
         </div>
     </header>

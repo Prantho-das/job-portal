@@ -20,14 +20,16 @@ class UserForm
                     ->label('Email address')
                     ->email()
                     ->required(),
-                TextInput::make('company_id')
-                    ->numeric(),
+                Select::make('company_id')
+                    ->label('Company')
+                    ->options(\App\Models\Company::pluck('name', 'id')->toArray())
+                    ->required(),
                 DateTimePicker::make('email_verified_at'),
                 TextInput::make('password')
                     ->password()
-                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
-                    ->dehydrated(fn (?string $state): bool => filled($state))
-                    ->required(fn (string $operation): bool => $operation === 'create'),
+                    ->dehydrateStateUsing(fn(string $state): string => Hash::make($state))
+                    ->dehydrated(fn(?string $state): bool => filled($state))
+                    ->required(fn(string $operation): bool => $operation === 'create'),
                 Select::make('role')
                     ->options([
                         'admin' => 'Admin',
@@ -38,6 +40,14 @@ class UserForm
                     ->default('user'),
                 TextInput::make('phone')
                     ->tel(),
+                Select::make('status')
+                    ->options([
+                        'active' => 'active',
+                        'inactive' => 'inactive',
+                        'banned' => 'banned',
+                    ])
+                    ->required()
+                    ->default('active'),
                 TextInput::make('status')
                     ->required()
                     ->default('active'),
