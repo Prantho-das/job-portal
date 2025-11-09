@@ -75,21 +75,25 @@ class SettingForm
                 ->dehydrated(false)
                 ->reactive()
                 ->afterStateUpdated(function ($state, callable $set, Get $get) {
-                    if ($get('type') === 'text') {
+                    if ($get('type') === 'text' && $state !== $get('value')) {
                         $set('value', $state);
                     }
                 }),
+                
 
             Textarea::make('value_textarea')
                 ->label('Value')
                 ->visible(fn(Get $get) => $get('type') === 'textarea')
                 ->dehydrated(false)
                 ->reactive()
+                
                 ->afterStateUpdated(function ($state, callable $set, Get $get) {
-                    if ($get('type') === 'textarea') {
+                    if ($get('type') === 'textarea' && $state !== $get('value')) {
                         $set('value', $state);
                     }
                 }),
+                
+                
 
             RichEditor::make('value_richtext')
                 ->label('Value')
@@ -97,7 +101,7 @@ class SettingForm
                 ->dehydrated(false)
                 ->reactive()
                 ->afterStateUpdated(function ($state, callable $set, Get $get) {
-                    if ($get('type') === 'richtext') {
+                    if ($get('type') === 'richtext' && $state !== $get('value')) {
                         $set('value', $state);
                     }
                 }),
@@ -121,8 +125,10 @@ class SettingForm
                 ->afterStateHydrated(function (Set $set, $state) {
                     if (is_string($state) && $state !== '') {
                         $set('value_image', [$state]);
+                    } else {
+                        $set('value_image', []);
                     }
-                })
+                })                
                 ->afterStateUpdated(function ($state, Set $set, Get $get) {
                     if ($get('type') === 'image') {
                         // একই logic, ensure single path set হয়
