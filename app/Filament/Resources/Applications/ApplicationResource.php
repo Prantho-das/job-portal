@@ -19,7 +19,7 @@ class ApplicationResource extends Resource
     protected static ?string $model = Application::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
+    protected static ?string $navigationLabel = 'Application List';
     public static function form(Schema $schema): Schema
     {
         return ApplicationForm::configure($schema);

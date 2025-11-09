@@ -56,7 +56,7 @@ class AppServiceProvider extends ServiceProvider
                 'footerCopyrightText',
                 'footerInstagramUrl',
                 'footerTwitterUrl',
-                'footerLinkedinUrl'
+                'footerLinkedinUrl','site_logo'
             ));
         });
     }
