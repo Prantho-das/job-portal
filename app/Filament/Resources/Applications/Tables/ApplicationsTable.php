@@ -124,6 +124,9 @@ class ApplicationsTable
                 SelectFilter::make('job_id')
                     ->relationship('job', 'title')
                     ->label('Job Title'),
+            SelectFilter::make('company_id')
+                ->relationship('job.company', 'name')
+                ->label('Company Name'),
             ])
             ->recordActions([
                 EditAction::make(),
