@@ -36,9 +36,9 @@ class AppServiceProvider extends ServiceProvider
             $footerPhone = $settingsService->get('footer_phone', '+123 456 7890');
             $footerEmail = $settingsService->get('footer_email', 'support@mm.com');
 
-            $footerCompanyLinks = $this->generateFooterLinks($settingsService->get('footer_company_page_slugs', ''));
-            $footerDevelopersLinks = $this->generateFooterLinks($settingsService->get('footer_developers_page_slugs', ''));
-            $footerCommunitiesLinks = $this->generateFooterLinks($settingsService->get('footer_communities_page_slugs', ''));
+            $footerCompanyLinks = $this->generateFooterLinks($settingsService->get('footer_company_links', ''));
+            $footerDevelopersLinks = $this->generateFooterLinks($settingsService->get('footer_developers_links', ''));
+            $footerCommunitiesLinks = $this->generateFooterLinks($settingsService->get('footer_communities_links', ''));
 
             $footerCopyrightText = $settingsService->get('footer_copyright_text', '&copy; ' . date('Y') . ' BGEA Jobs. Develop by POPCORN IT.');
             $footerInstagramUrl = $settingsService->get('footer_instagram_url', '#');
@@ -70,13 +70,15 @@ class AppServiceProvider extends ServiceProvider
             return '';
         }
 
-        $pages = Page::whereIn('slug', $slugs)->where('status', 'published')->get();
-
-        $html = '<ul>';
+        $html = '<ul class="mt-4 space-y-4">';
         foreach ($slugs as $slug) {
-            $page = $pages->firstWhere('slug', $slug);
-            if ($page) {
-                $html .= '<li><a href="' . route('page.show', $page->slug) . '" class="text-base text-gray-300 hover:text-white">' . $page->title . '</a></li>';
+            if ($slug) {
+                
+                $slugInfo=explode('|',$slug);
+                $link=$slugInfo[0]??"";
+                $title=$slugInfo[1]??"";
+                
+                $html .= '<li><a href="' . $link . '" class="text-base text-gray-300 hover:text-white">' . $title . '</a></li>';
             }
         }
         $html .= '</ul>';

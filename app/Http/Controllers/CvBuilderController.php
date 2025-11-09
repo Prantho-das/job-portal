@@ -17,14 +17,16 @@ class CvBuilderController extends Controller
             'phone' => 'nullable|string|max:255',
             'linkedin' => 'nullable|url|max:255',
             'address' => 'nullable|string|max:500',
-            'job_title' => 'nullable|string|max:255',
-            'company' => 'nullable|string|max:255',
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date',
-            'responsibilities' => 'nullable|string',
-            'degree' => 'nullable|string|max:255',
-            'institution' => 'nullable|string|max:255',
-            'graduation_date' => 'nullable|date',
+            'experiences' => 'nullable|array',
+            'experiences.*.job_title' => 'nullable|string|max:255',
+            'experiences.*.company' => 'nullable|string|max:255',
+            'experiences.*.start_date' => 'nullable|date',
+            'experiences.*.end_date' => 'nullable|date',
+            'experiences.*.responsibilities' => 'nullable|string',
+            'educations' => 'nullable|array',
+            'educations.*.degree' => 'nullable|string|max:255',
+            'educations.*.institution' => 'nullable|string|max:255',
+            'educations.*.graduation_date' => 'nullable|date',
             'skills' => 'nullable|string',
         ]);
 
@@ -36,28 +38,10 @@ class CvBuilderController extends Controller
             'phone' => $validatedData['phone'],
             'linkedin' => $validatedData['linkedin'],
             'address' => $validatedData['address'],
-            'experiences' => [],
-            'educations' => [],
+            'experiences' => $validatedData['experiences'] ?? [],
+            'educations' => $validatedData['educations'] ?? [],
             'skills' => $validatedData['skills'],
         ];
-
-        if (!empty($validatedData['job_title'])) {
-            $data['experiences'][] = [
-                'job_title' => $validatedData['job_title'],
-                'company' => $validatedData['company'],
-                'start_date' => $validatedData['start_date'],
-                'end_date' => $validatedData['end_date'],
-                'responsibilities' => $validatedData['responsibilities'],
-            ];
-        }
-
-        if (!empty($validatedData['degree'])) {
-            $data['educations'][] = [
-                'degree' => $validatedData['degree'],
-                'institution' => $validatedData['institution'],
-                'graduation_date' => $validatedData['graduation_date'],
-            ];
-        }
 
         // 2. Pass the validated data to the CV Blade template
         $pdf = PDF::loadView('cv.template', compact('data'));
