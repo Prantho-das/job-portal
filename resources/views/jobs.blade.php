@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="bg-white">
+    <div class="bg-[#f0eff5]">
         <div class="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-4 lg:gap-8">
 

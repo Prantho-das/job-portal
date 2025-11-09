@@ -6,7 +6,7 @@
 
 <div class="py-12">
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-        <div class="p-6 bg-white border border-gray-200 rounded-lg md:p-8">
+        <div class="p-6 bg-[#f0eff5] border border-gray-200 rounded-lg md:p-8">
 
             {{-- Header --}}
             <div class="items-start justify-between mb-6 md:flex">
@@ -154,36 +154,36 @@
             @guest
                 <div>
                     <label for="full_name" class="sr-only">Full Name</label>
-                    <input type="text" id="full_name" name="full_name" placeholder="Full Name*" class="w-full px-4 py-3 border-transparent bg-gray-100 rounded-md text-sm focus:bg-white focus:ring-2 focus:ring-red-500" required>
+                    <input type="text" id="full_name" name="full_name" placeholder="Full Name*" class="w-full px-4 py-3 text-sm bg-gray-100 border-transparent rounded-md focus:bg-white focus:ring-2 focus:ring-red-500" required>
                 </div>
                 <div>
                     <label for="email" class="sr-only">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Email*" class="w-full px-4 py-3 border-transparent bg-gray-100 rounded-md text-sm focus:bg-white focus:ring-2 focus:ring-red-500" required>
+                    <input type="email" id="email" name="email" placeholder="Email*" class="w-full px-4 py-3 text-sm bg-gray-100 border-transparent rounded-md focus:bg-white focus:ring-2 focus:ring-red-500" required>
                 </div>
                 <div>
                     <label for="mobile" class="sr-only">Mobile</label>
-                    <input type="text" id="mobile" name="mobile" placeholder="Mobile" class="w-full px-4 py-3 border-transparent bg-gray-100 rounded-md text-sm focus:bg-white focus:ring-2 focus:ring-red-500">
+                    <input type="text" id="mobile" name="mobile" placeholder="Mobile" class="w-full px-4 py-3 text-sm bg-gray-100 border-transparent rounded-md focus:bg-white focus:ring-2 focus:ring-red-500">
                 </div>
             @else
                 <div>
                     <label for="full_name" class="sr-only">Full Name</label>
-                    <input type="text" id="full_name" name="full_name" value="{{ Auth::user()->name }}" class="w-full px-4 py-3 border-transparent bg-gray-100 rounded-md text-sm" readonly>
+                    <input type="text" id="full_name" name="full_name" value="{{ Auth::user()->name }}" class="w-full px-4 py-3 text-sm bg-gray-100 border-transparent rounded-md" readonly>
                 </div>
                 <div>
                     <label for="email" class="sr-only">Email</label>
-                    <input type="email" id="email" name="email" value="{{ Auth::user()->email }}" class="w-full px-4 py-3 border-transparent bg-gray-100 rounded-md text-sm" readonly>
+                    <input type="email" id="email" name="email" value="{{ Auth::user()->email }}" class="w-full px-4 py-3 text-sm bg-gray-100 border-transparent rounded-md" readonly>
                 </div>
                 <div>
                     <label for="mobile" class="sr-only">Mobile</label>
-                    <input type="text" id="mobile" name="mobile" placeholder="Mobile" class="w-full px-4 py-3 border-transparent bg-gray-100 rounded-md text-sm focus:bg-white focus:ring-2 focus:ring-red-500" value="{{ Auth::user()->mobile ?? '' }}">
+                    <input type="text" id="mobile" name="mobile" placeholder="Mobile" class="w-full px-4 py-3 text-sm bg-gray-100 border-transparent rounded-md focus:bg-white focus:ring-2 focus:ring-red-500" value="{{ Auth::user()->mobile ?? '' }}">
                 </div>
             @endguest
             <div>
-                <div class="mt-1 flex justify-center px-6 pt-8 pb-8 border-2 border-gray-300 border-dashed rounded-md">
+                <div class="flex justify-center px-6 pt-8 pb-8 mt-1 border-2 border-gray-300 border-dashed rounded-md">
                     <div class="space-y-1 text-center">
-                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        <svg class="w-12 h-12 mx-auto text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                         <div class="flex text-sm text-gray-600">
-                            <label for="cv_file" class="relative cursor-pointer bg-white rounded-md font-medium text-red-600 hover:text-red-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-500">
+                            <label for="cv_file" class="relative font-medium text-red-600 bg-white rounded-md cursor-pointer hover:text-red-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-500">
                                 <span>Click or drag the file here to upload</span>
                                 <input id="cv_file" name="cv_file" type="file" class="sr-only" required>
                             </label>
@@ -191,13 +191,13 @@
                         <p class="text-xs text-gray-500">Only support PDF & WORD format. Max file size: 2MB</p>
                     </div>
                 </div>
-                <div id="file-upload-name" class="hidden flex items-center justify-between p-3 mt-2 border border-gray-200 rounded-md bg-gray-50">
+                <div id="file-upload-name" class="flex items-center justify-between hidden p-3 mt-2 border border-gray-200 rounded-md bg-gray-50">
                     <div class="flex items-center">
-                        <svg class="h-6 w-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M3.75 2.116A2.116 2.116 0 002.116 3.75v12.5c0 1.17.946 2.116 2.116 2.116h12.5a2.116 2.116 0 002.116-2.116V7.884a2.116 2.116 0 00-.62-1.496L13.62 1.504A2.116 2.116 0 0012.125 1H5.884A2.116 2.116 0 003.75 2.116zM8.5 7.25a.75.75 0 00-1.5 0v5.5a.75.75 0 001.5 0v-5.5zM10.75 5a.75.75 0 01.75.75v8.5a.75.75 0 01-1.5 0v-8.5a.75.75 0 01.75-.75zm2.25 2.5a.75.75 0 00-1.5 0v5.5a.75.75 0 001.5 0v-5.5z"></path></svg>
+                        <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M3.75 2.116A2.116 2.116 0 002.116 3.75v12.5c0 1.17.946 2.116 2.116 2.116h12.5a2.116 2.116 0 002.116-2.116V7.884a2.116 2.116 0 00-.62-1.496L13.62 1.504A2.116 2.116 0 0012.125 1H5.884A2.116 2.116 0 003.75 2.116zM8.5 7.25a.75.75 0 00-1.5 0v5.5a.75.75 0 001.5 0v-5.5zM10.75 5a.75.75 0 01.75.75v8.5a.75.75 0 01-1.5 0v-8.5a.75.75 0 01.75-.75zm2.25 2.5a.75.75 0 00-1.5 0v5.5a.75.75 0 001.5 0v-5.5z"></path></svg>
                         <span class="ml-2 text-sm text-gray-800" id="uploaded-file-name"></span>
                     </div>
                     <button type="button" id="remove-file-btn" class="ml-3 text-gray-500 hover:text-gray-700">
-                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd"></path></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd"></path></svg>
                     </button>
                 </div>
             </div>
