@@ -44,41 +44,39 @@ class SettingForm
                 ->reactive(),
 
             // Text Input for 'text' type
-            TextInput::make('value_text')
-    ->label('Value')
-    ->visible(fn(Get $get) => $get('type') === 'text')
-    ->reactive()
-    ->lazy()                // <<< এখানে lazy() যোগ করলাম
-    ->dehydrated(false)
-    ->afterStateUpdated(function ($state, callable $set, Get $get) {
-        if ($get('type') === 'text' && $state !== $get('value')) {
-            $set('value', $state);
-        }
-    }),
+            
 
-    Textarea::make('value_textarea')
-    ->label('Value')
-    ->visible(fn(Get $get) => $get('type') === 'textarea')
-    ->reactive()
-    ->lazy()                // <<< এখানে lazy() যোগ করলাম
-    ->dehydrated(false)
-    ->afterStateUpdated(function ($state, callable $set, Get $get) {
-        if ($get('type') === 'textarea' && $state !== $get('value')) {
-            $set('value', $state);
-        }
-    }),
 
-RichEditor::make('value_richtext')
-    ->label('Value')
-    ->visible(fn(Get $get) => $get('type') === 'richtext')
-    ->reactive()
-    ->lazy()                // <<< এখানে lazy() যোগ করলাম
-    ->dehydrated(false)
-    ->afterStateUpdated(function ($state, callable $set, Get $get) {
-        if ($get('type') === 'richtext' && $state !== $get('value')) {
-            $set('value', $state);
-        }
-    }),
+    TextInput::make('value_text')
+            ->label('Text Value')
+            ->visible(fn(Get $get) => $get('type') === 'text')
+            ->live(false)
+            ->dehydrated(fn(Get $get) => $get('type') === 'text') // ✅ only send when active
+            ->default(fn($record) => $record?->value),
+
+            Textarea::make('value_textarea')
+            ->label('Value')
+            ->visible(fn(Get $get) => $get('type') === 'textarea')
+            ->live(false) // better than reactive() for stability
+            ->dehydrated(fn(Get $get) => $get('type') === 'textarea') // ✅ only send when active
+            ->default(fn($record) => $record?->value)
+            ->afterStateUpdated(function ($state, callable $set, Get $get) {
+                if ($get('type') === 'textarea' && $state !== $get('value')) {
+                    $set('value', $state);
+                }
+            }),
+        
+        RichEditor::make('value_richtext')
+            ->label('Value')
+            ->visible(fn(Get $get) => $get('type') === 'richtext')
+            ->live(false)
+            ->dehydrated(fn(Get $get) => $get('type') === 'richtext')
+            ->default(fn($record) => $record?->value)
+            ->afterStateUpdated(function ($state, callable $set, Get $get) {
+                if ($get('type') === 'richtext' && $state !== $get('value')) {
+                    $set('value', $state);
+                }
+            }),        
 
             FileUpload::make('value_image')
                 ->label('Value')

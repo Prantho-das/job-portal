@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Settings\Pages;
 use App\Filament\Resources\Settings\SettingResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\Facades\Log;
 
 class EditSetting extends EditRecord
 {
@@ -12,15 +13,32 @@ class EditSetting extends EditRecord
    
 
     protected function mutateFormDataBeforeSave(array $data): array
-    {
-        if ($data['type'] === 'image' && empty($data['value'])) {
-            $data['value'] = $data['value_image'] ?? null;
-            \Log::info('🛠 Fixing missing value', ['fixed_value' => $data['value']]);
-        }
+{
+    \Log::info('🧩 Raw form data before save', $data);
 
-        \Log::info('✅ Final data before save', $data);
-        return $data;
+    $type = $data['type'] ?? null;
+
+    if ($type === 'text' && isset($data['value_text'])) {
+        $data['value'] = $data['value_text'];
     }
+
+    if ($type === 'textarea' && isset($data['value_textarea'])) {
+        $data['value'] = $data['value_textarea'];
+    }
+
+    if ($type === 'richtext' && isset($data['value_richtext'])) {
+        $data['value'] = $data['value_richtext'];
+    }
+
+    if ($type === 'image' && isset($data['value_image'])) {
+        $data['value'] = $data['value_image'];
+    }
+
+    \Log::info('✅ Final data before save', $data);
+
+    return $data;
+}
+
 
     protected function getHeaderActions(): array
     {
