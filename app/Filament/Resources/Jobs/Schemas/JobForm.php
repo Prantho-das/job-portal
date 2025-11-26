@@ -92,7 +92,7 @@ class JobForm
                     ])->default('any'),
                     DatePicker::make('deadline')->required(),
                     Toggle::make('is_hot')->label('Featured Job'),
-                ])->columns(3),
+                ])->columns(3)->columnSpanFull(),
 
                 Section::make('Relations')->schema([
                     Select::make('categories')
