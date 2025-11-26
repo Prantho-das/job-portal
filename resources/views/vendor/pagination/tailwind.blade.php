@@ -24,7 +24,7 @@
         @if (is_string($element))
         <li aria-disabled="true">
             <span
-                class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-default">{{
+                class="relative inline-flex items-center px-4 mx-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-default">{{
                 $element }}</span>
         </li>
         @endif
