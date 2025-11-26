@@ -27,10 +27,7 @@
             <div class="space-y-4">
                 @foreach($latestJobs as $job)
                 <div class="flex items-center justify-between p-4 transition-shadow duration-200 bg-white border border-gray-200 rounded-xl sm:p-6 hover:shadow-md">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0 mr-5">
-                            <img class="object-contain w-20 h-10" src="{{ $job->company->logo ?? 'https://placehold.co/100x40/e2e8f0/334155?text=Logo' }}" alt="{{ $job->company->name ?? 'Company' }} logo">
-                        </div>
+                    <div class="flex items-center justify-between">
                         <div class="flex-grow">
                             <h3 class="text-lg font-semibold text-gray-900 cursor-pointer hover:text-red-600"><a href="{{ route('job-detail', $job->slug) }}">{{ $job->title }}</a></h3>
                             <p class="text-sm text-gray-600">{{ $job->company->name ?? 'N/A' }}</p>
@@ -43,7 +40,7 @@
                                     <svg class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 11V3m0 8h8m-8 0H3m15.05 6.05a7 7 0 11-9.9-9.9 7 7 0 019.9 9.9z"></path></svg>
                                     <span>{{ $job->salary_min }} - {{ $job->salary_max }}</span>
                                 </div>
-                                <div class="flex items-center my-1 mr-4">
+                                <div class="flex items-center my-1 mr-4 text-red-600">
                                     <svg class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                                     <span>Deadline: {{ $job->deadline->format('d M Y') }}</span>
                                 </div>
@@ -52,6 +49,11 @@
                                     <span>{{ $job->location }}</span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="flex-shrink-0 mr-5">
+                            <img class="object-contain w-20 h-10"
+                                src="{{ $job->company->logo ?? 'https://placehold.co/100x40/e2e8f0/334155?text=Logo' }}"
+                                alt="{{ $job->company->name ?? 'Company' }} logo">
                         </div>
                     </div>
                     <div class="flex-shrink-0 ml-6">
