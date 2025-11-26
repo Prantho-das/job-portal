@@ -71,11 +71,11 @@ class JobForm
                 ])->columns(2)->columnSpanFull(),
 
                 Section::make('Details')->schema([
-                    RichEditor::make('description')->label('Job Description')->required()->columnSpanFull(),
-                    RichEditor::make('requirements')->label('Requirements')->columnSpanFull(),
-                    RichEditor::make('responsibilities')->label('Responsibilities')->columnSpanFull(),
-                    RichEditor::make('benefits')->label('Benefits')->columnSpanFull(),
-                ]),
+                    RichEditor::make('description')->label('Job Description')->required(),
+                    RichEditor::make('requirements')->label('Requirements'),
+                    RichEditor::make('responsibilities')->label('Responsibilities'),
+                    RichEditor::make('benefits')->label('Benefits'),
+                ])->columns(2)->columnSpanFull(),
 
                 Section::make('Company Information')->schema([
                     TextInput::make('location')->required()->maxLength(255),
