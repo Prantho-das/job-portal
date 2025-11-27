@@ -39,12 +39,14 @@ class Job extends Model
         'job_nature',
         'views_count',
         'avg_match_score',
+        'skills'
     ];
 
     protected $casts = [
         'deadline' => 'date',
         'is_hot' => 'boolean',
         'keywords' => 'array',
+        'skills'=>'array'
     ];
 
     /** 🔗 Relationships */

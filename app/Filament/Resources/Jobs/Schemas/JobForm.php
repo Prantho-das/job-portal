@@ -101,7 +101,9 @@ class JobForm
                         ->relationship('categories', 'name')
                         ->preload()
                         ->searchable(),
-
+                        TagsInput::make('skills')
+                        ->label('Skills')
+                        ->placeholder('Press Enter to add keywords'),
                     Select::make('educationLevels')
                         ->multiple()
                         ->label('Education Levels')

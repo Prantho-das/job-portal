@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('c_jobs', function (Blueprint $table) {
-            $table->json('skills')->nullable();
+        Schema::table('companies', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 

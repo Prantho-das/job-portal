@@ -53,7 +53,8 @@ class ApplicationController extends Controller
         }
 
         Application::create($applicationData);
-
+      
+session()->flash('success', 'Your application has been submitted successfully!');
         return back()->with('success', 'Your application has been submitted successfully!');
     }
 }

@@ -1,6 +1,6 @@
 @if ($paginator->hasPages())
 <nav role="navigation" aria-label="{{ __('Pagination Navigation') }}" class="flex justify-center">
-    <ul class="flex items-center -space-x-px h-10 text-base">
+    <ul class="flex items-center -space-x-px h-10 text-base gap-2">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
         <li>
@@ -24,7 +24,7 @@
         @if (is_string($element))
         <li aria-disabled="true">
             <span
-                class="relative inline-flex items-center px-4 mx-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-default">{{
+                class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-default">{{
                 $element }}</span>
         </li>
         @endif
