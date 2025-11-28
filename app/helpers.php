@@ -13,3 +13,14 @@ if (!function_exists('get_logo')) {
         });
     }
 }
+
+
+if (!function_exists('getSetting')) {
+    function getSetting($key,$default='')
+    {
+        return Cache::remember('site_setting_'.$key, 3600, function () use($key,$default){
+            $setting = Setting::where('key', $key)->first();
+            return $setting ? $setting->value : $default;
+        });
+    }
+}

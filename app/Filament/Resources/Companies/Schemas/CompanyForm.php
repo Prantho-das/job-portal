@@ -27,6 +27,7 @@ class CompanyForm
                     \Filament\Forms\Components\FileUpload::make('logo')
                         ->label('Company Logo')
                         ->directory('companies/logos')
+                        ->disk('public')
                         ->image()
                         ->imageEditor()
                         ->maxSize(1024)

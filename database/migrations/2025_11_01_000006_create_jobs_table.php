@@ -36,7 +36,7 @@ return new class extends Migration {
             $table->decimal('avg_match_score', 3, 2)->default(0);
             $table->timestamps();
             $table->softDeletes();
-            $table->index(['title', 'location', 'status', 'slug', 'salary_min', 'salary_max', 'experience_min', 'experience_max', 'age_min', 'age_max', 'gender_preference']);
+//            $table->index(['title', 'location', 'status', 'slug', 'salary_min', 'salary_max', 'experience_min', 'experience_max', 'age_min', 'age_max', 'gender_preference']);
         });
     }
 

@@ -26,6 +26,19 @@
         #printMeShow { display: visible !important; }
         #printMeHidden { display: hidden !important; }
         }
+        #main-footer{
+        background:{{getSetting('footer_color','#0b3c38')}}
+        }
+    </style>
+    <style>
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
     </style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -66,7 +79,7 @@
                     <a href="{{ route('login') }}"
                         class="hidden sm:inline-block px-6 py-2.5 rounded-md text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition-colors">Sign
                         In</a>
-                    <button class="p-2 text-gray-500 rounded-md md:hidden hover:text-gray-700">
+                    <button id="mobile-toggle-btn" class="p-2 text-gray-500 rounded-md md:hidden hover:text-gray-700">
                         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h16M4 12h16m-7 6h7"></path>
@@ -76,13 +89,19 @@
             </div>
         </div>
     </nav>
-
+<!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white shadow-md">
+        <a href="{{ url('/') }}" class="block px-4 py-3 text-gray-700 hover:bg-gray-100">Home</a>
+        <a href="{{ url('/jobs') }}" class="block px-4 py-3 text-gray-700 hover:bg-gray-100">Jobs</a>
+        <a href="{{ url('/companies') }}" class="block px-4 py-3 text-gray-700 hover:bg-gray-100">Companies</a>
+        <a href="{{ url('/build-cv') }}" class="block px-4 py-3 text-gray-700 hover:bg-gray-100">Build Your CV</a>
+        <a href="{{ route('login') }}" class="block px-4 py-3 text-red-600 font-semibold hover:bg-gray-100">Sign In</a>
+    </div>    
     <main class="bg-[#f0eff5]">
         @yield('content')
     </main>
-
     {{-- Footer --}}
-    <footer id="main-footer" class="bg-[#0b3c38]" aria-labelledby="footer-heading">
+    <footer id="main-footer" class="" aria-labelledby="footer-heading">
         <div class="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:py-16 lg:px-8">
             <div class="pb-8 xl:grid xl:grid-cols-5 xl:gap-8">
                 <div class="space-y-8 xl:col-span-2">
@@ -173,7 +192,16 @@
             </div>
         </div>
     </footer>
-
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+                const btn = document.querySelector("nav button");
+                const menu = document.getElementById("mobile-menu");
+            
+                btn.addEventListener("click", () => {
+                    menu.classList.toggle("hidden");
+                });
+            });
+    </script>        
 </body>
 
 </html>

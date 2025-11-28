@@ -40,7 +40,7 @@
                 @forelse($companies as $company)
                 <div class="text-center transition-shadow duration-200 bg-white border border-gray-200 rounded-lg hover:shadow-lg">
                     <div class="p-6">
-                        <img class="w-auto h-16 mx-auto mb-4" src="{{ $company->logo ?? 'https://placehold.co/150x80/e2e8f0/334155?text=Logo' }}" alt="{{ $company->name }} Logo">
+                        <img class="w-auto h-16 mx-auto mb-4" src="{{ $company->logo ?asset('storage').'/'.$company->logo: 'https://placehold.co/150x80/e2e8f0/334155?text=Logo' }}" alt="{{ $company->name }} Logo">
                         <h3 class="text-lg font-semibold text-gray-900">{{ $company->name }}</h3>
                         <p class="text-sm text-gray-500">{{ $company->industry }}</p>
                         <p class="mt-1 text-xs text-gray-400">{{ $company->city }}, {{ $company->country }}</p>

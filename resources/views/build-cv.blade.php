@@ -11,7 +11,17 @@
             <p class="mt-2 text-sm text-gray-600">{{ $buildCvDescription }}</p>
         </div>
 
-        <form action="{{ route('cv.store') }}" method="POST" class="mt-10 space-y-10">
+@if ($errors->any())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-3">
+        <ul class="list-disc ml-5 text-sm">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+        <form action="{{ route('cv.store') }}" method="POST" class="mt-10 space-y-10"  enctype="multipart/form-data">
             @csrf
 
             {{-- Personal Information --}}
@@ -34,6 +44,24 @@
                         <label for="linkedin" class="block text-sm font-medium text-gray-700">LinkedIn Profile URL</label>
                         <input type="url" name="linkedin" id="linkedin" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm sm:text-sm">
                     </div>
+                    <div>
+    <label for="photo" class="block text-sm font-medium text-gray-700">
+        Profile Photo
+    </label>
+
+    <input
+        type="file"
+        name="photo"
+        id="photo"
+        accept="image/*"
+        class="block w-full mt-1 border-gray-300 rounded-md shadow-sm text-sm
+               file:mr-4 file:py-2 file:px-4
+               file:rounded-md file:border-0
+               file:bg-gray-100 file:text-gray-700
+               hover:file:bg-gray-200"
+    >
+</div>
+
                     <div class="sm:col-span-2">
                         <label for="address" class="block text-sm font-medium text-gray-700">Full Address</label>
                         <textarea name="address" id="address" rows="3" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm sm:text-sm"></textarea>

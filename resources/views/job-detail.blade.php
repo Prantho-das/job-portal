@@ -27,14 +27,14 @@
                 </svg>
                 Job List
             </a>
-            <div class="sticky top-0 z-50 bg-white print:hidden" id="stickyHead">
+            <div class="sticky top-[4rem] z-50 bg-white print:hidden" id="stickyHead">
 
 
                 <div class="items-start justify-between mb-6 md:flex">
                     <div class="flex-grow">
                         <div class="flex items-start flex-col">
                             <img class="object-contain w-auto h-12 mr-4"
-                                src="{{ $job->company->logo ?? 'https://placehold.co/100x50/e2e8f0/334155?text=Logo' }}"
+                                src="{{ $job->company->logo ?  url('storage').'/'.$job->company->logo: 'https://placehold.co/100x50/e2e8f0/334155?text=Logo' }}"
                                 alt="{{ $job->company->name ?? 'Company' }} logo">
                             <div class="mt-6">
                                 <h1 class="text-3xl font-bold text-gray-900">{{ $job->title }}</h1>
@@ -44,11 +44,7 @@
                     </div>
                     <div class="flex-shrink-0 mt-4 flex-col text-left md:text-right md:mt-0 md:ml-6">
                         <p class="flex items-center text-sm text-gray-500 md:justify-end">
-                            <svg class="h-4 w-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
+                            <img class="h-4 w-4 mr-2" src="{{ asset("icons/Deadline.svg") }}" />
                             <span class="text-red-600">
                                 Deadline: {{ $job->deadline->format('d M Y') }}
                             </span>
@@ -61,14 +57,7 @@
 
                             <button onclick="window.print()"
                                 class="p-2.5 border border-red-600 rounded-md  hover:bg-red-50">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        d="M5 4h10a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2zm0 1a1 1 0 00-1 1v6a1 1 0 001 1h10a1 1 0 001-1V6a1 1 0 00-1-1H5z">
-                                    </path>
-                                    <path
-                                        d="M6 12a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zM4 8a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zM3 15a1 1 0 100 2h14a1 1 0 100-2H3z">
-                                    </path>
-                                </svg>
+                                <img class="h-4 w-4" src="{{ asset("icons/printer.svg") }}" />
                             </button>
                         </div>
                     </div>
@@ -76,8 +65,7 @@
 
                 {{-- Tabs --}}
                 <div class="border-b border-gray-200 bg-white">
-                    <nav id="tabs" class="flex flex-nowrap" aria-label="Tabs">
-
+                   <nav id="tabs" class="w-full" aria-label="Tabs">
                         @php
                         $tabs = [
                         'All' => '#All',
@@ -88,21 +76,31 @@
                         'Company Info' => '#company-info',
                         ];
                         @endphp
-
-                        @foreach ($tabs as $label => $href)
-                        <a href="{{ $href }}" data-tab
-                            class="flex-1 py-3 text-sm font-semibold text-gray-800 text-center first:border-l-2 border-r border-t border-b border-gray-300 cursor-pointer whitespace-nowrap">
-                            {{ $label }}
-                        </a>
-                        @endforeach
-
-                    </nav>
+                    
+                        <div class="flex flex-nowrap overflow-x-scroll scrollbar-hide">
+                            @foreach ($tabs as $label => $href)
+                            <a href="{{ $href }}" data-tab class="flex-1 py-3 text-sm font-semibold text-gray-800 text-center 
+                                                              first:border-l-2 border-r border-t border-b border-gray-300 
+                                                              cursor-pointer whitespace-nowrap
+                                                              min-w-fit px-4
+                                                              {{$label=='All'?'bg-yellow-50 text-gray-900 font-bold':''}}
+                                                              md:flex-1 md:min-w-0 md:px-0"
+                                               data-tab
+                                                              onclick="scrollToSection('{{ $href }}'); return false;"
+                                                              
+                                                              >
+                                {{ $label }}
+                            </a>
+                            @endforeach
+                        </div>              </nav>
+                   
                 </div>
             </div>
             {{-- Job Details --}}
             <div class="mt-8 space-y-8">
                 {{-- Summary --}}
-                <div class="p-6 rounded-lg bg-sky-50">
+                <section id="All" class="scroll-mt-20">
+                <div  class="p-6 rounded-lg bg-sky-50 ">
                     <h3 class="mb-4 text-lg font-bold text-gray-900">Summary</h3>
                     <div class="grid grid-cols-1 text-sm sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4">
                         <div><span class="font-semibold text-gray-600">Job Type:</span> <span class="text-gray-800">{{
@@ -132,32 +130,31 @@
                                 ucfirst($job->job_nature) }}</span></div>
                     </div>
                 </div>
-
+</section>
                 {{-- Sections --}}
-                <div id="All"></div>
 
-                <section id="description" class="text-gray-700 bg-gray-100 border border-gray-200 p-6">
+                <section id="description" class="text-gray-700 scroll-mt-20 bg-gray-100 border border-gray-200 p-6">
                     <h3 class="text-lg font-bold text-gray-900">Description</h3>
                     <div class="mt-4 prose max-w-none">
                         {!! $job->description !!}
                     </div>
                 </section>
 
-                <section id="requirements" class="text-gray-700 bg-gray-100 border border-gray-200 p-6">
+                <section id="requirements" class="text-gray-700 scroll-mt-20 bg-gray-100 border border-gray-200 p-6">
                     <h3 class="text-lg font-bold text-gray-900">Requirements</h3>
                     <div class="mt-4 prose max-w-none">
                         {!! $job->requirements !!}
                     </div>
                 </section>
 
-                <section id="responsibilities" class="text-gray-700 bg-gray-100 border border-gray-200 p-6">
+                <section id="responsibilities" class="text-gray-700 scroll-mt-20 bg-gray-100 border border-gray-200 p-6">
                     <h3 class="text-lg font-bold text-gray-900">Responsibilities & Context</h3>
                     <div class="mt-4 prose max-w-none">
                         {!! $job->responsibilities !!}
                     </div>
                 </section>
 
-                <section id="benefits" class="text-gray-700 bg-gray-100 border border-gray-200 p-6">
+                <section id="benefits" class="text-gray-700 scroll-mt-20 bg-gray-100 border border-gray-200 p-6">
                     <h3 class="text-lg font-bold text-gray-900">Benefits</h3>
                     <div class="mt-4 prose max-w-none">
                         {!! $job->benefits !!}
@@ -165,13 +162,13 @@
                 </section>
 
                 {{-- Skills & Expertise with improved styling --}}
-                <section id="skills-expertise" class="text-gray-700 bg-gray-100 border border-gray-200 p-6">
+                <section id="skills-expertise" class="text-gray-700 scroll-mt-20 bg-gray-100 border border-gray-200 p-6">
                     <h3 class="text-lg font-bold text-gray-900 mb-4">Skills & Expertise</h3>
                     <div class="flex flex-wrap gap-2">
                         @if ($job->skills)
                         @foreach ($job->skills as $keyword)
                         <span
-                            class="px-3 py-1 text-sm font-medium text-gray-700 bg-gray-300 shadow-sm border border-gray-400 rounded-full">
+                            class="px-3 py-1 text-sm font-medium text-gray-700 scroll-mt-20 bg-gray-300 shadow-sm border border-gray-400 rounded-full">
                             {{ $keyword }}
                         </span>
                         @endforeach
@@ -195,7 +192,7 @@
                     </div>
                 </section>
 
-                <section id="company-info" class="text-gray-700 bg-gray-100 border border-gray-200 p-6">
+                <section id="company-info" class="text-gray-700 scroll-mt-20 bg-gray-100 border border-gray-200 p-6">
                     <h3 class="text-lg font-bold text-gray-900">Company Information</h3>
                     <div class="mt-4 space-y-3">
                         <p class="font-semibold">{{ $job->company->name ?? 'N/A' }}</p>
@@ -345,44 +342,47 @@
                     closeModal();
                 }
             });
+        } 
+
+    });
+</script>
+
+<script>
+    function scrollToSection(hash) {
+        if (hash.startsWith('#')) hash = hash.substring(1);
+        
+        const target = document.getElementById(hash);
+        if (!target) return;
+
+        const navHeight = document.getElementById('tabs').offsetHeight;
+        const extraOffset = 250;
+
+        window.scrollTo({
+            top: target.offsetTop - navHeight - extraOffset,
+            behavior: 'smooth'
+        });
+
+        // Update URL hash
+        history.pushState(null, null, '#' + hash);
+
+      
+        // --- Highlight active tab ---
+        document.querySelectorAll('#tabs a').forEach(a => {
+            a.classList.remove('bg-yellow-50', 'text-gray-900','font-bold');
+        });
+
+        const activeTab = document.querySelector(`#tabs a[href="#${hash}"]`);
+        if (activeTab) {
+            activeTab.classList.add('bg-yellow-50', 'text-gray-900','font-bold');
         }
+    }
 
-
-        const tabs = document.querySelectorAll('[data-tab]');
-        
-        const activeClasses = [
-        'bg-yellow-50',
-        'text-gray-900',
-        'font-bold'
-        ];
-        
-        function clearActive() {
-        tabs.forEach(t => {
-        t.classList.remove(...activeClasses);
-        });
+    // Automatically highlight correct tab on page load (if hash exists)
+    document.addEventListener('DOMContentLoaded', () => {
+        let currentHash = window.location.hash.replace('#', '');
+        if (currentHash) {
+            scrollToSection('#' + currentHash);
         }
-        
-        tabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        clearActive();
-        tab.classList.add(...activeClasses);
-        
-        const target = document.querySelector(tab.getAttribute('href'));
-        target?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-        });
-        
-        // optional: update URL hash
-        history.replaceState(null, '', tab.getAttribute('href'));
-        });
-        });
-        
-        // default active
-        tabs[0].classList.add(...activeClasses);
-
     });
 </script>
 
